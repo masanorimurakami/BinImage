@@ -12,12 +12,13 @@ public class ChangeImage {
 	 * @return
 	 */
 	public BufferedImage changeToGray(BufferedImage bufimg) {
-		// モノクロイメージ画像
-		BufferedImage monoimg = null;
 
 		// 元画像のサイズを取得
 		int width = bufimg.getWidth();
 		int height = bufimg.getHeight();
+
+		// モノクロイメージ画像を生成
+		BufferedImage monoimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 		// 横幅を走査
 		for (int x = 0; x < width; x++) {
@@ -49,12 +50,13 @@ public class ChangeImage {
 	 * @return
 	 */
 	public BufferedImage changeToBin(BufferedImage monoimg) {
-		// 二値化されたイメージ
-		BufferedImage binimg = null;
 
 		// 画像サイズの取得
 		int width = monoimg.getWidth();
 		int height = monoimg.getHeight();
+
+		// 二値化されたイメージ生成
+		BufferedImage binimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 		// ピクセル数を求める
 		int size = width * height;
@@ -63,7 +65,7 @@ public class ChangeImage {
 		int[] histogram = new int[256];
 
 		// ヒストグラムを初期化。
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < 256; i++) {
 			histogram[i] = 0;
 		}
 
@@ -101,9 +103,9 @@ public class ChangeImage {
 				int d = color.getGreen();
 				// 白黒閾値との比較
 				if (threshold > d) {
-					d = 255;
-				} else {
 					d = 0;
+				} else {
+					d = 255;
 				}
 				// 色情報を生成
 				color = new Color(d, d, d);
